@@ -1,0 +1,35 @@
+networks:
+  go_service:
+  repo_rangler_proxy:
+    name: repo_rangler_proxy
+    external: true
+
+services:
+  go_service_nginx:
+    container_name: reporangler_go_service_nginx
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    networks:
+      - repo_rangler_proxy
+      - go_service
+    volumes:
+      - ./public:/www/public:ro
+    environment:
+      - VIRTUAL_HOST=go.reporangler.localhost
+    depends_on:
+      - go_service_phpfpm
+
+  go_service_phpfpm:
+    container_name: reporangler_go_service_phpfpm
+    build:
+      context: .
+      dockerfile: docker/phpfpm/Dockerfile
+    networks:
+      - go_service
+      - repo_rangler_proxy
+    volumes:
+      - .:/www
+      - ../lib-reporangler:/lib-reporangler:ro
+    env_file:
+      - .env

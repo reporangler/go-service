@@ -1,0 +1,48 @@
+{
+    "name": "reporangler/go-service",
+    "description": "The Go Module Proxy Service for the Repo Rangler project",
+    "keywords": ["reporangler", "go", "golang", "modules", "laravel"],
+    "license": "MIT",
+    "type": "project",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/lib-reporangler"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^11.0",
+        "reporangler/lib-reporangler": "*"
+    },
+    "require-dev": {
+        "laravel/tinker": "^2.9",
+        "phpunit/phpunit": "^9.0",
+        "mockery/mockery": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ]
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "audit": {
+            "block-insecure": false
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
